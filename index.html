@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+
+    #city {
+        /* display: inline-block; */
+        border-right: 1px solid gray;
+        padding: 0 20px 0 0 ;
+    }
+
+
+    body {
+        background-color: gray;
+        max-width: 1000px;
+        padding: 20px;
+        
+    }
+
+    #main {
+        background-color: white;
+        padding: 20px;
+        margin: 0;
+        
+    }
+    
+    #city-list {
+        padding: 20px 0 0 0 ;
+
+    }
+
+    #city-button {
+        width: 200px;
+        text-align: left;
+        min-height: 2em;
+
+    }
+
+    
+    </style>
+
+
+</head>
+<body>
+    
+    <div class="container col-lg-12 rounded" id="main">
+        <div id="city">
+            <div>
+                <input type="text" id="city-name" placeholder="Enter city name here..">
+                <button id="add-city">Add</button>
+
+            </div>
+
+            <div id="city-list">
+
+
+
+            </div>
+
+
+        </div>
+
+
+        <div id="weather-information">
+
+
+        </div>
+
+
+    </div>
+    <script>
+        
+        
+        
+            document.getElementById("add-city").addEventListener("click", function() {
+                if  (document.getElementById("city-name").value.length === 0) {
+                    alert("Please enter a city name.");
+                } else {
+                    var addCity = document.createElement("button");
+                    var linebreak = document.createElement("br");
+                    var cityName = document.getElementById("city-name").value;
+                    addCity.setAttribute("data-name", cityName);
+                    addCity.setAttribute("id", "city-button");
+                    addCity.innerHTML = cityName;
+                    document.getElementById("city-list").appendChild(addCity);
+                    document.getElementById("city-name").value = "";
+                    document.getElementById("city-list").appendChild(linebreak);
+
+            }})
+
+        document.getElementById("city-name").addEventListener('keypress', function (e) {
+            if (e.key === 'Enter' && document.getElementById("city-name").value.length === 0) {
+                alert("Please enter a city name.");
+            } else if (e.key === 'Enter') {
+                var addCity = document.createElement("button");
+                var linebreak = document.createElement("br");
+                var cityName = document.getElementById("city-name").value;
+                addCity.setAttribute("data-name", cityName);
+                addCity.setAttribute("id", "city-button");
+                addCity.innerHTML = cityName;
+                document.getElementById("city-list").appendChild(addCity);
+                document.getElementById("city-name").value = "";
+                document.getElementById("city-list").appendChild(linebreak);
+
+
+        }})
+        
+
+
+
+    </script>
+</body>
+</html>
