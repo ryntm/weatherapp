@@ -10,7 +10,7 @@
     <style>
 
     #city {
-        /* display: inline-block; */
+        display: inline-block;
         border-right: 1px solid gray;
         padding: 0 20px 0 0 ;
     }
@@ -26,20 +26,43 @@
     #main {
         background-color: white;
         padding: 20px;
-        margin: 0;
-        
+        display: inline-block;
+    }
+
+    #banner {
+        background: rgb(0, 0, 0);
+        color: white;
+        display: inline-block;
+        height: 100px;
+        text-align: center;
+        padding: 20px 0 0 0;
+
+
     }
     
     #city-list {
         padding: 20px 0 0 0 ;
-
+        width: 220px;
     }
 
     #city-button {
-        width: 200px;
+        width: 228px;
         text-align: left;
-        min-height: 2em;
+        min-height: 2.5em;
+        background: white;
+        border: 1px solid lightgray;
 
+    }
+
+    #weather-information{
+        display: inline-block;
+        padding: 0 0 0 20px;
+        
+    }
+
+    #weather-now {
+        border: 1px solid lightgray;
+        width: 100%;
     }
 
     
@@ -48,8 +71,10 @@
 
 </head>
 <body>
-    
-    <div class="container col-lg-12 rounded" id="main">
+    <div class="container rounded" id="banner"><h1>Weather Dashboard</h1></div>
+
+<br><br>
+    <div class="container rounded" id="main">
         <div id="city">
             <div>
                 <input type="text" id="city-name" placeholder="Enter city name here..">
@@ -68,29 +93,63 @@
 
 
         <div id="weather-information">
+            <div class="rounded" id="weather-now">
+                Test text Test text Test text Test text
 
+
+            </div>  
+
+
+            <div  id="weather-5">
+
+
+
+            </div>
 
         </div>
 
 
     </div>
     <script>
+        var apikey = "ecbcada8aa60e9ad0b8e6939e25be7a0";
+        var savedCities = JSON.parse(localStorage.getItem("cities"));
+        console.log(savedCities);
+        if (savedCities == null) {
+            savedCities = [];
+        };
+        
+        if (savedCities.length > 0) {
+            for (var i = 0; i < savedCities.length; i++) {
+                var addCity = document.createElement("button");
+                var linebreak = document.createElement("br");
+                var cityName = document.getElementById("city-name").value;
+                addCity.setAttribute("data-name", savedCities[i]);
+                console.log(savedCities[i]);
+                addCity.setAttribute("id", "city-button");
+                addCity.innerHTML = savedCities[i];
+                document.getElementById("city-list").appendChild(addCity);
+                document.getElementById("city-list").appendChild(linebreak);
+            }}
         
         
+        JSON.parse(localStorage.getItem("cities"));
+        // console.log(savedCities);
         
-            document.getElementById("add-city").addEventListener("click", function() {
-                if  (document.getElementById("city-name").value.length === 0) {
-                    alert("Please enter a city name.");
-                } else {
-                    var addCity = document.createElement("button");
-                    var linebreak = document.createElement("br");
-                    var cityName = document.getElementById("city-name").value;
-                    addCity.setAttribute("data-name", cityName);
-                    addCity.setAttribute("id", "city-button");
-                    addCity.innerHTML = cityName;
-                    document.getElementById("city-list").appendChild(addCity);
-                    document.getElementById("city-name").value = "";
-                    document.getElementById("city-list").appendChild(linebreak);
+        document.getElementById("add-city").addEventListener("click", function() {
+            if  (document.getElementById("city-name").value.length === 0) {
+                alert("Please enter a city name.");
+            } else {
+                var addCity = document.createElement("button");
+                var linebreak = document.createElement("br");
+                var cityName = document.getElementById("city-name").value;
+                addCity.setAttribute("data-name", cityName);
+                addCity.setAttribute("id", "city-button");
+                addCity.innerHTML = cityName;
+                document.getElementById("city-list").appendChild(addCity);
+                document.getElementById("city-list").appendChild(linebreak);
+                savedCities.push(cityName);
+                localStorage.setItem("cities", JSON.stringify(savedCities));
+                document.getElementById("city-name").value = "";
 
             }})
 
@@ -105,12 +164,15 @@
                 addCity.setAttribute("id", "city-button");
                 addCity.innerHTML = cityName;
                 document.getElementById("city-list").appendChild(addCity);
-                document.getElementById("city-name").value = "";
                 document.getElementById("city-list").appendChild(linebreak);
-
-
+                savedCities.push(cityName);
+                localStorage.setItem("cities", JSON.stringify(savedCities));
+                document.getElementById("city-name").value = "";
         }})
-        
+
+// on load, it would get the json file from localstorage and then create buttons for each entry. parse(localStorage.getItem(saved-cities))
+
+
 
 
 
