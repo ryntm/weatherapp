@@ -78,17 +78,18 @@
 
     }
 
-    #weather-5 {
-        padding: 10px;
+    #more-weather {
+        padding: 10px 0 0 0;
 
     }
 
     #five-day-div {
         border: 1px solid lightgray;
-        /* display: inline-block; */
+        display: inline-block;
         padding: 10px;
         color: white;
         background-color: orange;
+        margin-right: 10px;
 
     }
     
@@ -128,10 +129,15 @@
             </div>  
 
 
-            <div  id="weather-5">
-                <button id="5-day">5-day</button>
-                <button id="hourly">Hourly</button>
+            <div  id="more-weather">
+                <!-- <button id="5-day">5-day</button>
+                <button id="hourly">Hourly</button> -->
                 <br><br>
+
+            </div>
+            
+            <div id="weather-5">
+
 
             </div>
 
@@ -144,14 +150,21 @@
 
         const apiKey = "ecbcada8aa60e9ad0b8e6939e25be7a0";
         var savedCities = JSON.parse(localStorage.getItem("cities"));
-        var url = "http://api.openweathermap.org/data/2.5/weather?q=" + savedCities[0] + "&units=imperial&APPID=" + apiKey
-        var urlFiveDay = "http://api.openweathermap.org/data/2.5/forecast?q=" + savedCities[0] + "&units=imperial&APPID=" + apiKey
-        console.log(savedCities);
 
         if (savedCities == null) {
             savedCities = [];
         };
+
+        if (savedCities == null) {
+            return
+        };
         
+
+
+        var url = "http://api.openweathermap.org/data/2.5/weather?q=" + savedCities[0] + "&units=imperial&APPID=" + apiKey
+        var urlFiveDay = "http://api.openweathermap.org/data/2.5/forecast?q=" + savedCities[0] + "&units=imperial&APPID=" + apiKey
+        console.log(savedCities);
+
         if (savedCities.length > 0) {
             for (var i = 0; i < savedCities.length; i++) {
                 var addCity = document.createElement("button");
@@ -187,6 +200,8 @@
                 alert("Please enter a city name.");
             } else {
                 appendCity();
+                location.reload();
+
 
             }})
 
@@ -195,6 +210,8 @@
                 alert("Please enter a city name.");
             } else if (e.key === 'Enter') {
                 appendCity();
+                location.reload();
+
         }})
 
 
@@ -208,6 +225,11 @@
                         console.log(json)
                         console.log(json.name)
 
+                        if (json.cod == "404") {
+                            document.getElementById("weather-now").innerHTML = "The selected city is not valid. Please select another city."
+                            $("#weather-5").empty();
+                            return
+                        }
                     
                         var getCurrentWeather = document.createElement("h1");
                         var weatherImage = document.createElement("img")
@@ -236,7 +258,59 @@
                         // weatherNow.appendChild(pUV);
 
 
-                    })};
+                    })
+                    fetch(urlFiveDay)
+                    .then(function(r) {
+                        console.log(r);
+                        return r.json();
+                    })
+                    .then(function(json) {
+                        console.log(json);
+                        var forecastDay = json.list
+                        var extractFive = [forecastDay[7],forecastDay[15],forecastDay[23],forecastDay[31],forecastDay[39]]
+                        console.log(extractFive);
+                        $("#weather-5").empty();
+
+                        //i want to make a div for 4 values of i -- 
+                        // for (var i = 0; i < forecastDay.length; i++) {
+                        //     if (i !== 7 || i !== 15 || i !== 23 || i !== 31 || i !== 39) {
+                                
+                        //     } else {
+                            for (var i = 0; i < extractFive.length; i++) {
+                                var forecastDiv1 = document.createElement("div")
+                                var forecastDate = document.createElement("h3")
+                                var weatherImage = document.createElement("img")
+                                var pTemp = document.createElement("p");
+                                var pFeelsLike = document.createElement("p");
+                                var date1 = new Date(extractFive[i].dt * 1000);
+                                var weather5 = document.getElementById("weather-5");
+                                console.log(date1);
+
+                                forecastDiv1.setAttribute("id", "five-day-div");
+                                forecastDiv1.setAttribute("class", "rounded");
+                                forecastDate.innerHTML = "(" + date1.getMonth()+1 + "/" + date1.getDate() + "/" + date1.getFullYear() + ")";
+                                weatherImage.setAttribute("src", "http://openweathermap.org/img/w/" + extractFive[i].weather[0].icon + ".png");
+                                // document.getElementById("five-day-div").appendChild(forecastDate);
+                                pTemp.innerHTML = "Temp: " + extractFive[i].main.temp + " F";
+                                pFeelsLike.innerHTML = "Feels like: " + extractFive[i].main.feels_like + " F";
+                                // document.getElementById("five-day-div").appendChild(pTemp);
+                                // document.getElementById("five-day-div").appendChild(pFeelsLike);
+                                forecastDiv1.appendChild(forecastDate);
+                                forecastDiv1.appendChild(weatherImage);
+                                forecastDiv1.appendChild(pTemp);
+                                forecastDiv1.appendChild(pFeelsLike);
+                                
+                                weather5.appendChild(forecastDiv1);
+
+                            }
+                                
+                            }
+                            
+                        )
+                
+                
+                
+                };
 
 
             var demo = document.querySelectorAll("#city-button");
@@ -260,7 +334,13 @@
                         console.log(json.name)
                         // getWeather();
 
-                    
+                        if (json.cod == "404") {
+                            document.getElementById("weather-now").innerHTML = "The selected city is not valid. Please select another city."
+                            $("#weather-5").empty();
+
+                            return
+                        }
+
                         var getCurrentWeather = document.createElement("h1");
                         var weatherImage = document.createElement("img")
                         var linebreak = document.createElement("br");
@@ -299,36 +379,41 @@
                         var forecastDay = json.list
                         var extractFive = [forecastDay[7],forecastDay[15],forecastDay[23],forecastDay[31],forecastDay[39]]
                         console.log(extractFive);
+                        $("#weather-5").empty();
 
                         //i want to make a div for 4 values of i -- 
                         // for (var i = 0; i < forecastDay.length; i++) {
                         //     if (i !== 7 || i !== 15 || i !== 23 || i !== 31 || i !== 39) {
                                 
                         //     } else {
-                            extractFive.forEach(function() {
+                            for (var i = 0; i < extractFive.length; i++) {
                                 var forecastDiv1 = document.createElement("div")
                                 var forecastDate = document.createElement("h3")
                                 var weatherImage = document.createElement("img")
-                                var linebreak = document.createElement("br");
                                 var pTemp = document.createElement("p");
                                 var pFeelsLike = document.createElement("p");
-                                var date1 = new Date(forecastDay[i].dt * 1000);
+                                var date1 = new Date(extractFive[i].dt * 1000);
                                 var weather5 = document.getElementById("weather-5");
-
                                 console.log(date1);
 
-                                forecastDate.innerHTML = "(" + date1.getMonth()+1 + "/" + date1.getDate() + "/" + date1.getFullYear() + ")"
                                 forecastDiv1.setAttribute("id", "five-day-div");
                                 forecastDiv1.setAttribute("class", "rounded");
-                                weather5.appendChild(forecastDiv1)
-                                document.getElementById("five-day-div").appendChild(forecastDate);
-                                pTemp.innerHTML = "Temp: " + forecastDay[i].main.temp + " F";
-                                pFeelsLike.innerHTML = "Feels like: " + forecastDay[i].main.feels_like + " F";
-                                document.getElementById("five-day-div").appendChild(pTemp);
-                                document.getElementById("five-day-div").appendChild(pFeelsLike);
+                                forecastDate.innerHTML = "(" + date1.getMonth()+1 + "/" + date1.getDate() + "/" + date1.getFullYear() + ")";
+                                weatherImage.setAttribute("src", "http://openweathermap.org/img/w/" + extractFive[i].weather[0].icon + ".png");
+                                // document.getElementById("five-day-div").appendChild(forecastDate);
+                                pTemp.innerHTML = "Temp: " + extractFive[i].main.temp + " F";
+                                pFeelsLike.innerHTML = "Feels like: " + extractFive[i].main.feels_like + " F";
+                                // document.getElementById("five-day-div").appendChild(pTemp);
+                                // document.getElementById("five-day-div").appendChild(pFeelsLike);
+                                forecastDiv1.appendChild(forecastDate);
+                                forecastDiv1.appendChild(weatherImage);
+                                forecastDiv1.appendChild(pTemp);
+                                forecastDiv1.appendChild(pFeelsLike);
+                                
+                                weather5.appendChild(forecastDiv1);
 
-
-                                })
+                            }
+                                
                             }
                             
                         )
