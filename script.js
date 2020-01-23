@@ -4,8 +4,8 @@ $(document).ready(function() {
     const apiKeyUV = "";
     var savedCities = JSON.parse(localStorage.getItem("cities"));
     var lastCity = JSON.parse(localStorage.getItem("last-city"))
-    var url = "http://api.openweathermap.org/data/2.5/weather?q=" + lastCity + "&units=imperial&APPID=" + apiKey
-    var urlFiveDay = "http://api.openweathermap.org/data/2.5/forecast?q=" + lastCity + "&units=imperial&APPID=" + apiKey
+    var url = "https://api.openweathermap.org/data/2.5/weather?q=" + lastCity + "&units=imperial&APPID=" + apiKey
+    var urlFiveDay = "https://api.openweathermap.org/data/2.5/forecast?q=" + lastCity + "&units=imperial&APPID=" + apiKey
     // var urlUV = 'https://api.openuv.io/api/v1/uv?lat=' + lat + '&lng=' + lng;
     // US IS NOT LOADING ON BUTTON PRESS
     var lat = JSON.parse(localStorage.getItem("lat"));
@@ -113,7 +113,7 @@ $(document).ready(function() {
                     console.log(lon)
 
 
-                    weatherImage.setAttribute("src", "http://openweathermap.org/img/w/" + json.weather[0].icon + ".png");
+                    weatherImage.setAttribute("src", "https://openweathermap.org/img/w/" + json.weather[0].icon + ".png");
                     getCurrentWeather.innerHTML = json.name + " (" + date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + ")" ;
                     weatherNow.appendChild(getCurrentWeather);
                     weatherNow.append(weatherImage);
@@ -176,7 +176,7 @@ $(document).ready(function() {
                             forecastDiv1.setAttribute("id", "five-day-div");
                             forecastDiv1.setAttribute("class", "rounded");
                             forecastDate.innerHTML = "(" + date1.getMonth()+1 + "/" + date1.getDate() + "/" + date1.getFullYear() + ")";
-                            weatherImage.setAttribute("src", "http://openweathermap.org/img/w/" + extractFive[i].weather[0].icon + ".png");
+                            weatherImage.setAttribute("src", "https://openweathermap.org/img/w/" + extractFive[i].weather[0].icon + ".png");
                             // document.getElementById("five-day-div").appendChild(forecastDate);
                             pTemp.innerHTML = "Temp: " + extractFive[i].main.temp + " F";
                             pFeelsLike.innerHTML = "Feels like: " + extractFive[i].main.feels_like + " F";
@@ -204,8 +204,8 @@ $(document).ready(function() {
         for (var i = 0; i < demo.length; i++) {
             demo[i].addEventListener("click", function() {
                 // var url = "";
-                var url = "http://api.openweathermap.org/data/2.5/weather?q=" + $(this).data("name") + "&units=imperial&APPID=" + apiKey;
-                var urlFiveDay = "http://api.openweathermap.org/data/2.5/forecast?q=" + $(this).data("name") + "&units=imperial&APPID=" + apiKey;
+                var url = "https://api.openweathermap.org/data/2.5/weather?q=" + $(this).data("name") + "&units=imperial&APPID=" + apiKey;
+                var urlFiveDay = "https://api.openweathermap.org/data/2.5/forecast?q=" + $(this).data("name") + "&units=imperial&APPID=" + apiKey;
                 var cityName = $(this).data("name");
                 localStorage.setItem("last-city", JSON.stringify(cityName));
 
@@ -243,7 +243,7 @@ $(document).ready(function() {
                     localStorage.setItem("lat", JSON.stringify(lat));
                     localStorage.setItem("lon", JSON.stringify(lon));
 
-                    weatherImage.setAttribute("src", "http://openweathermap.org/img/w/" + json.weather[0].icon + ".png");
+                    weatherImage.setAttribute("src", "https://openweathermap.org/img/w/" + json.weather[0].icon + ".png");
                     getCurrentWeather.innerHTML = json.name + " (" + date.getMonth()+1 + "/" + date.getDate() + "/" + date.getFullYear() + ")" ;
                     weatherNow.appendChild(getCurrentWeather);
                     weatherNow.append(weatherImage);
@@ -306,7 +306,7 @@ $(document).ready(function() {
                             forecastDiv1.setAttribute("id", "five-day-div");
                             forecastDiv1.setAttribute("class", "rounded");
                             forecastDate.innerHTML = "(" + date1.getMonth()+1 + "/" + date1.getDate() + "/" + date1.getFullYear() + ")";
-                            weatherImage.setAttribute("src", "http://openweathermap.org/img/w/" + extractFive[i].weather[0].icon + ".png");
+                            weatherImage.setAttribute("src", "https://openweathermap.org/img/w/" + extractFive[i].weather[0].icon + ".png");
                             // document.getElementById("five-day-div").appendChild(forecastDate);
                             pTemp.innerHTML = "Temp: " + extractFive[i].main.temp + " F";
                             pFeelsLike.innerHTML = "Feels like: " + extractFive[i].main.feels_like + " F";
