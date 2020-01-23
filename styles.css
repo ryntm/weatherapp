@@ -1,0 +1,82 @@
+header {
+    width: 100%
+}
+
+#city {
+    display: table-cell;
+    /* border-right: 1px solid gray; */        
+    min-height: 325px;
+    padding: 0 20px 0 10px ;
+    vertical-align: top;
+}
+
+
+body {
+    background-color: lightgray;
+    /* max-width: 1000px; */
+    padding: 20px;
+    
+}
+
+#banner {
+    background: rgb(0, 0, 0);
+    color: white;
+    display: inline-block;
+    height: 100px;
+    text-align: center;
+    padding: 20px 0 0 0;
+
+}
+
+#city-list {
+    padding: 20px 0 0 0 ;
+    width: 250px;
+}
+
+#city-button {
+    width: 228px;
+    text-align: left;
+    min-height: 2.5em;
+    background: white;
+    border: 1px solid lightgray;
+
+}
+
+#weather-information{
+    vertical-align: top;
+    background-color: white;
+    display: table-cell;
+    padding: 15px;
+    width: 100%;
+    
+}
+
+#weather-now {
+    border: 1px solid lightgray;
+    /* width: 100%; */
+    /* vertical-align: top; */
+    height: auto;
+    min-height: 300px;
+    padding: 20px 10px 10px 10px;
+}
+
+#same {
+    height: auto;
+
+}
+
+#more-weather {
+    padding: 10px 0 0 0;
+
+}
+
+#five-day-div {
+    border: 1px solid lightgray;
+    display: inline-block;
+    padding: 10px;
+    color: white;
+    background-color: orange;
+    margin-right: 10px;
+    margin-top: 10px;
+
+}
